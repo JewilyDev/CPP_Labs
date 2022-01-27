@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "ball.h"
+class Ball;
 
 namespace Ui {
 class MainWindow;
@@ -23,7 +23,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    Ball bim;
+    Ball *bim = nullptr;
 };
 
 #endif // MAINWINDOW_H

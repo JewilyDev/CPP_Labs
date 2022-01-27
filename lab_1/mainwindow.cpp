@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "ball.h"
 #include <QPainter>
 #include <QTimer>
 #include <QMouseEvent>
@@ -11,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     QTimer *timer = new QTimer;
     connect(timer,SIGNAL(timeout()),this,SLOT(update()));
-    timer->start(100);
+    timer->start(5);
 }
 
 MainWindow::~MainWindow()
@@ -21,40 +22,48 @@ MainWindow::~MainWindow()
 
 void MainWindow::paintEvent(QPaintEvent *event)
 {
-    //qDebug("Paint");
     QPainter painter(this);
-    /*
-    painter.drawLine(x - 2,y,x + 2,y);
-    painter.drawLine(x,y - 2,x,y + 2);
-    */
-    //painter.drawLine(0,0,100,100);
-    painter.drawEllipse(bim.x -  (bim.r / 2),bim.y  - (bim.r / 2),bim.r,bim.r);
+    if(bim != nullptr)
+    {
+        int d = bim->getD();
+        painter.drawEllipse(bim->getX() - (d / 2), bim->getY() - (d / 2),d,d);
+    }
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-    //qDebug("X = %d Y = %d",event->x(),event->y());
-    bim.x = event->x();
-    bim.y = event->y();
-    bim.dx = -1;
-    bim.dy = -1;
-    bim.r = 20;
+    bim = new Ball();
+    bim->setX(event->x());
+    bim->setY(event->y());
+    bim->setDy(-1);
+    bim->setDx(-1);
+    bim->setD(20);
     repaint();
 }
 
 void MainWindow::update()
 {
-    //qDebug("Tick");
+    if(!bim)
+        return;
+    int d = bim->getD();
+    int x = bim->getX();
+    int y = bim->getY();
+    int dy = bim ->getDy();
+    int dx = bim->getDx();
     QRect rect = contentsRect();
     int  height = rect.height();
     int  width = rect.width();
-    if(bim.x - (bim.r / 2) <= 0 || (bim.x + (bim.r / 2)) >= width){
-       bim.dx = bim.dx * - 1;
+    if(x - (d / 2) <= 0 || (x + (d / 2)) >= width)
+    {
+       bim->setDx(dx * - 1);
+       dx = bim->getDx();
     }
-    if(bim.y - (bim.r / 2) <= 0 || (bim.y + (bim.r / 2)) >= height){
-        bim.dy = bim.dy * - 1;
+    if(y - (d / 2) <= 0 || (y + (d / 2)) >= height)
+    {
+        bim->setDy(dy * - 1);
+         dy = bim->getDy();
     }
-    bim.x += bim.dx;
-    bim.y += bim.dy;
+    bim->setX(dx + x);
+    bim->setY(dy + y);
     repaint();
 }
