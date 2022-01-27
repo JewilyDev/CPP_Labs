@@ -1,9 +1,12 @@
 #include "ball.h"
 
 Ball::Ball()
-    :
-      x(0),y(0),d(1),dx(1),dy(1)
-{}
+    //:x(0),y(0),d(1),dx(1),dy(1)
+    :Ball(0,0,1,0,0)
+{
+  
+    
+}
 
 Ball::Ball(int x, int y, int d,int dx,int dy)
 {

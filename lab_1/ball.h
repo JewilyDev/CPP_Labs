@@ -6,6 +6,8 @@ class Ball
 {
 public:
     Ball();
+    Ball(int x, int y, int d,int dx = 0, int dy = 0);
+
     int getDy() const;
     void setDy(int value);
 
@@ -24,9 +26,9 @@ public:
 private:
     int x;
     int y;
-    int dx = -5;
-    int dy = -5;
-    int d = 20;
+    int dx;
+    int dy;
+    int d;
 };
 
 

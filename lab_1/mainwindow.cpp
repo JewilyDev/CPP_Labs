@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     QTimer *timer = new QTimer;
     connect(timer,SIGNAL(timeout()),this,SLOT(update()));
-    timer->start(5);
+    timer->start(10);
 }
 
 MainWindow::~MainWindow()
@@ -24,20 +24,18 @@ void MainWindow::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     if(bim != nullptr)
+
+
     {
         int d = bim->getD();
         painter.drawEllipse(bim->getX() - (d / 2), bim->getY() - (d / 2),d,d);
     }
+
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-    bim = new Ball();
-    bim->setX(event->x());
-    bim->setY(event->y());
-    bim->setDy(-1);
-    bim->setDx(-1);
-    bim->setD(20);
+    bim = new Ball(event->x(),event->y(),20,-2,-2);
     repaint();
 }
 
