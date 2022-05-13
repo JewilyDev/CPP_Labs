@@ -1,0 +1,9 @@
+ball.cpp
+ball.h
+lab_1.cflags
+lab_1.cxxflags
+lab_1.pro
+main.cpp
+mainwindow.cpp
+mainwindow.h
+mainwindow.ui
